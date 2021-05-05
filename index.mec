@@ -1,9 +1,40 @@
 # html
+
 ## Description
 
 React to HTML events, render HTML elements, draw shapes on HTML Canvas
 
-## Provided Tables
+## App
+
+- `#html/app[|root contains|]`
+
+## HTML Elements
+
+Every HTML element has the following two column
+
+- `[|type parameters contains|]`
+
+The available elements and parameters are:
+
+- "div" - `[]`
+- "a" - `[|href|]`
+- "img" - `[|src|]`
+- "button" - `[]`
+- "slider" - `[|min max value|]`
+- "canvas" - `[|height width|]`
+
+## Canvas
+
+The available elements and parameters are:
+
+- "circle" - `[|center-x center-y radius|]`
+- "rectangle" - `[|x y height width|]`
+- "path" - `[|start-point|]`
+- "line" - `[|x y|]`
+- "quadratic" - `[|control-point end-point|]`
+- "image" - `[|source x y rotation|]`
+
+## Events
 
 - `#html/event/pointer-move[|x y target|]`
 - `#html/event/pointer-down[|x y target|]`
