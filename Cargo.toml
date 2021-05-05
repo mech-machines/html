@@ -1,0 +1,25 @@
+[package]
+name = "mech-html"
+version = "0.0.1"
+authors = ["Corey Montella <corey@mech-lang.org>"]
+description = "HTML library for the Mech language"
+documentation = "http://docs.mech-lang.org"
+homepage = "http://mech-lang.org"
+repository = "https://github.com/mech-machines/html"
+keywords = ["mech", "language", "programming"]
+license = "Apache-2.0"
+readme = "README.md"
+
+[badges]
+gitlab = { repository = "mech-lang/machines/html", branch = "main" }
+maintenance = { status = "actively-developed" }
+
+[lib]
+crate-type = ["dylib", "rlib"]
+
+[dependencies]
+mech-core = {path = "../../core"}
+mech-utilities = {path = "../../utilities"}
+
+crossbeam-channel = "0.4"
+lazy_static = "1.4.0"

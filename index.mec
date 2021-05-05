@@ -1,0 +1,21 @@
+# html
+## Description
+
+React to HTML events, render HTML elements, draw shapes on HTML Canvas
+
+## Provided Tables
+
+- `#html/event/pointer-move[|x y target|]`
+- `#html/event/pointer-down[|x y target|]`
+- `#html/event/pointer-click[|x y target|]`
+- `#html/event/pointer-keydown[|key event-id|]`
+- `#html/event/pointer-keyup[|key event-id|]`
+
+## Info
+
+  #html/machine = [
+    name: "html" 
+    version: "v0.0.1"
+    authors: "Corey Montella" 
+    url: "https://gitlab/com/mech-lang/machines/html"
+    license: "Apache-2.0"]
