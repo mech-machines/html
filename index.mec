@@ -37,10 +37,18 @@ The available elements and parameters are:
 
 - "circle" - `[|center-x center-y radius|]`
 - "rectangle" - `[|x y height width|]`
-- "path" - `[|start-point|]`
+- "path" - `[|start-point contains|]`
 - "line" - `[|x y|]`
 - "quadratic" - `[|control-point end-point|]`
-- "image" - `[|source x y rotation|]`
+- "image" - `[|x y source|]`
+
+All elements have the following optional columns:
+
+`[|fill stroke line-width transform|]`
+
+- fill - a 3 byte hexadecimal Number Literal representing a color
+- stroke - a 3 byte hexadecimal Number Literal representing a color
+- line-width - a quantity in pixels specying the width of the stroke or line
 
 ### Events
 
