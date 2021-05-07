@@ -52,9 +52,9 @@ All elements have the following optional columns:
 
 ### Events
 
-- `#html/event/pointer-move[|x y target|]`
-- `#html/event/pointer-down[|x y target|]`
-- `#html/event/pointer-click[|x y target|]`
+- `#html/event/pointer-move[|x y target event-id|]`
+- `#html/event/pointer-down[|x y target event-id|]`
+- `#html/event/pointer-click[|x y target event-id|]`
 - `#html/event/pointer-keydown[|key event-id|]`
 - `#html/event/pointer-keyup[|key event-id|]`
 
