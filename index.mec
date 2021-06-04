@@ -58,6 +58,10 @@ All elements have the following optional columns:
 - `#html/event/pointer-keydown[|key event-id|]`
 - `#html/event/pointer-keyup[|key event-id|]`
 
+### Location
+
+- `#html/location[|hash host host-name href origin path-name port protocol search|]`
+
 ## Info
 
   #html/machine = [
