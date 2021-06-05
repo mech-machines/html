@@ -21,5 +21,5 @@ crate-type = ["dylib", "rlib"]
 mech-core = {git = "https://gitlab.com/mech-lang/core"}
 mech-utilities = {git = "https://gitlab.com/mech-lang/utilities"}
 
-crossbeam-channel = "0.4"
+crossbeam-channel = "0.5.1"
 lazy_static = "1.4.0"
