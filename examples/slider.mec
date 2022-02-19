@@ -1,0 +1,10 @@
+Button Example
+  #html/app = [
+    root: "mech-root" 
+    contains: [
+      type: "slider" 
+      min: 0.0
+      max: 100.0
+      value: 80.1
+    ]
+  ]
