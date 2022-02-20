@@ -1,3 +1,7 @@
+# Canvas shapes
+
+## Basic shapes
+
 Define the shapes
   #circle = [
     shape: "circle" 
@@ -54,7 +58,9 @@ Define the shapes
     ]
   ]
 
-Set up path drawing 
+## Path Elements
+
+Line
   x = 250.0
   y = 250.0
   path = [100.0 100.0
@@ -72,6 +78,8 @@ Set up path drawing
       rotate: 0.0
     ]
   ]
+
+Quadratic
   control-point = [x: 20.0 y: 100.0]
   end-point = [x: 200.0 y:  20.0]                    
   shapes = [|shape      parameters|
@@ -87,6 +95,8 @@ Set up path drawing
       rotate: 0.0
     ]
   ]
+
+Bezier
   control-points = [|x y| 20.0 100.0; 200.0 100.0]
   shapes = [|shape    parameters|
              "bezier" [|control-points end-point| [|x y| control-points] [|x y| end-point]]]
@@ -102,9 +112,26 @@ Set up path drawing
     ]
   ]
 
+Arc
+  shapes = [|shape   parameters|
+             "arc"   [center-x: 0.0 center-y: 0.0 starting-angle: 30.0 ending-angle: -30.0 radius: 35.0]
+             "line"  [x: 0.0 y: 0.0]]
+  #arc = [
+    shape: "path" 
+    parameters: [
+      start-point: [x: 0.0 y: 0.0] 
+      contains: [|shape parameters| shapes] 
+      stroke: 0x000000 
+      fill: 0xFFFF00
+      line-width: 3
+      translate: [x: x y: y]
+      rotate: 0.0
+    ]
+  ]
 
 
-Draw a Shape
+
+Draw a shape to the canvas
   shape = #circle
   canvas = [
     type: "canvas" 
