@@ -6,3 +6,6 @@ extern crate crossbeam_channel;
 extern crate lazy_static;
 //use mech_core::{Interner, Transaction};
 //use mech_core::Value;
+
+mod shapes;
+mod elements;
