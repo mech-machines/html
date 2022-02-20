@@ -54,6 +54,25 @@ Define the shapes
     ]
   ]
 
+  Set up path drawing 
+    x = 250.0
+    y = 250.0
+    path = [100.0 100.0
+            20.0 20.0]
+    shapes = [|shape   parameters|
+              "line"  [|x y| path]]
+    #path = [
+      shape: "path" 
+      parameters: [
+        start-point: [x: 0.0 y: 0.0] 
+        contains: [|shape parameters| shapes] 
+        stroke: 0xFF0000 
+        line-width: 3.0
+        translate: [x: x y: y]
+        rotate: 0.0
+      ]
+    ]
+
 
 Draw a Shape
   shape = #circle
