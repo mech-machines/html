@@ -57,7 +57,15 @@ Define the shapes
       font: [size: 50.0 face: "Arial"]
     ]
   ]
-
+  #image = [
+    shape: "image" 
+    parameters: [
+      x: 100.0
+      y: 100.0
+      source: "http://mech-lang.org/img/logo.png"
+      rotate: 46.0
+    ]
+  ]
 ## Path Elements
 
 Line
