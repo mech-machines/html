@@ -43,6 +43,16 @@ Define the shapes
       line-width: 5.0
     ]
   ]
+  #text = [
+    shape: "text" 
+    parameters: [
+      x: 150.0   
+      y: 250.0   
+      text: "Hello World!"
+      fill: 0xFF0000    
+      font: [size: 50.0 face: "Arial"]
+    ]
+  ]
 
 
 Draw a Shape
