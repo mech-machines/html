@@ -32,11 +32,24 @@ Define the shapes
       line-width: 5.0
     ]
   ]
+  #rectangle = [
+    shape: "rectangle" 
+    parameters: [
+      x: 250.0   
+      y: 250.0   
+      width: 200.0
+      height: 150.0
+      fill: 0xFF0000    
+      line-width: 5.0
+    ]
+  ]
 
-Draw a circle
+
+Draw a Shape
+  shape = #circle
   canvas = [
     type: "canvas" 
-    contains: [|shape parameters| #circle] 
+    contains: [|shape parameters| shape] 
     parameters: [width: 500.0 height: 500.0]
   ]
   #html/app = [
