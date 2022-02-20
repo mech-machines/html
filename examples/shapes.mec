@@ -1,0 +1,33 @@
+Define the shapes
+  #circle = [
+    shape: "circle" 
+    parameters: [
+      center-x: 250.0   
+      center-y: 250.0   
+      radius: 35.0      
+      fill: 0xFF0000    
+      line-width: 5.0
+    ]
+  ]
+  #ellipse = [
+    shape: "ellipse" 
+    parameters: [
+      center-x: 250.0   
+      center-y: 250.0   
+      major-axis: 30.0
+      minor-axis: 50.0
+      radius: 35.0      
+      fill: 0xFF0000    
+      line-width: 5.0
+    ]
+
+Draw a circle
+  canvas = [
+    type: "canvas" 
+    contains: [|shape parameters| #circle] 
+    parameters: [width: 500.0 height: 500.0]
+  ]
+  #html/app = [
+    root: "mech-root" 
+    contains: [|type contains parameters| canvas]
+  ]
