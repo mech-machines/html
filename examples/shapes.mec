@@ -60,10 +60,11 @@ Define the shapes
   #image = [
     shape: "image" 
     parameters: [
-      x: 100.0
+      x: 200.0
       y: 100.0
       source: "http://mech-lang.org/img/logo.png"
-      rotate: 46.0
+      scale: [x: 0.10 y: 0.10]
+      rotate: 15
     ]
   ]
 ## Path Elements
