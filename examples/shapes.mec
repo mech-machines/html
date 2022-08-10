@@ -1,6 +1,8 @@
-# Canvas shapes
+Canvas Shapes
+==============
 
-## Basic shapes
+1. Basic shapes
+----------------
 
 Define the shapes
   #circle = [
@@ -24,6 +26,7 @@ Define the shapes
       fill: 0xFF0000    
       line-width: 5.0
     ]
+  ]
   #arc = [
     shape: "arc" 
     parameters: [
@@ -67,7 +70,9 @@ Define the shapes
       rotate: 15
     ]
   ]
-## Path Elements
+
+2. Path Elements
+-----------------
 
 Line
   x = 250.0
@@ -138,12 +143,10 @@ Arc
     ]
   ]
 
-
-
 Draw a shape to the canvas
   shape = #circle
   canvas = [
-    type: "canvas" 
+    kind: "canvas" 
     contains: [|shape parameters| shape] 
     parameters: [width: 500.0 height: 500.0]
   ]

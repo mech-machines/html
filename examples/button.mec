@@ -2,7 +2,7 @@ Button Example
   #html/app = [
     root: "mech-root" 
     contains: [
-      type: "button" 
+      kind: "button" 
       contains: "Click Me!" 
     ]
   ]

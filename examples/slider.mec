@@ -1,10 +1,19 @@
+Default
+  #x = 80
+
+Label
+  #message = [type: "div" contains: #x]
+
 Button Example
   #html/app = [
     root: "mech-root" 
     contains: [
-      type: "slider" 
-      min: 0.0
-      max: 100.0
-      value: 80.1
+      [type: "div" contains: [
+        [#message]
+        [type: "slider" 
+          min: 0.0
+          max: 100.0
+          value: [#x]]
+      ]]
     ]
   ]

@@ -2,7 +2,7 @@ Div text example
   #html/app = [
     root: "mech-root" 
     contains: [
-      type: "div" 
+      kind: "div" 
       contains: "Hello World!"
     ]
   ]
