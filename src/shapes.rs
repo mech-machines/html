@@ -153,7 +153,7 @@ pub fn render_rectangle(parameters_table: Rc<RefCell<Table>>, context: &Rc<Canva
   Ok(())
 }
 
-pub fn render_text(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRenderingContext2d>, wasm_core: *mut WasmCore) -> Result<(),JsValue> {
+pub fn render_text(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRenderingContext2d>, core: &mech_core::Core) -> Result<(),JsValue> {
   let parameters_table_brrw = parameters_table.borrow();
   for row in 1..=parameters_table_brrw.rows {
     match (parameters_table_brrw.get(&TableIndex::Index(row), &TableIndex::Alias(*TEXT)),
@@ -170,7 +170,7 @@ pub fn render_text(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRend
         context.set_line_width(line_width);
         match parameters_table_brrw.get(&TableIndex::Index(row), &TableIndex::Alias(*FONT)) {
           Ok(Value::Reference(font_table_id)) => {
-            let font_table = unsafe{(*wasm_core).core.get_table_by_id(*font_table_id.unwrap()).unwrap()};
+            let font_table = core.get_table_by_id(*font_table_id.unwrap()).unwrap();
             let font_table_brrw = font_table.borrow();
             let size = get_property(&font_table_brrw, row, *SIZE);
             let face = match &*get_property(&font_table_brrw, row, *FACE) {
@@ -198,7 +198,7 @@ pub fn render_text(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRend
         context.set_line_width(line_width);
         match parameters_table_brrw.get(&TableIndex::Index(row), &TableIndex::Alias(*FONT)) {
           Ok(Value::Reference(font_table_id)) => {
-            let font_table = unsafe{(*wasm_core).core.get_table_by_id(*font_table_id.unwrap()).unwrap()};
+            let font_table = core.get_table_by_id(*font_table_id.unwrap()).unwrap();
             let font_table_brrw = font_table.borrow();
             let size = get_property(&font_table_brrw, row, *SIZE);
             let face = match &*get_property(&font_table_brrw, row, *FACE) {
@@ -233,15 +233,15 @@ pub fn render_line(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRend
   Ok(())
 }
 
-pub fn render_quadratic(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRenderingContext2d>, wasm_core: *mut WasmCore) -> Result<(),JsValue> {
+pub fn render_quadratic(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRenderingContext2d>, core: &mech_core::Core) -> Result<(),JsValue> {
   let parameters_table_brrw = parameters_table.borrow();
   for row in 1..=parameters_table_brrw.rows {
     let parameters_table_brrw = parameters_table.borrow();
     match (parameters_table_brrw.get(&TableIndex::Index(1), &TableIndex::Alias(*CONTROL__POINT)),
           parameters_table_brrw.get(&TableIndex::Index(1), &TableIndex::Alias(*END__POINT))) {
       (Ok(Value::Reference(TableId::Global(control__point_table_id))),Ok(Value::Reference(TableId::Global(end__point_table_id)))) => {
-        let control__point_table = unsafe{(*wasm_core).core.get_table_by_id(control__point_table_id).unwrap()};
-        let end__point_table = unsafe{(*wasm_core).core.get_table_by_id(end__point_table_id).unwrap()};
+        let control__point_table = core.get_table_by_id(control__point_table_id).unwrap();
+        let end__point_table = core.get_table_by_id(end__point_table_id).unwrap();
         let control__point_table_brrw = control__point_table.borrow();
         let end__point_table_brrw = end__point_table.borrow();
         match (control__point_table_brrw.get(&TableIndex::Index(1), &TableIndex::Alias(*X)),
@@ -260,13 +260,13 @@ pub fn render_quadratic(parameters_table: Rc<RefCell<Table>>, context: &Rc<Canva
   Ok(())
 }
 
-pub fn render_bezier(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRenderingContext2d>, wasm_core: *mut WasmCore) -> Result<(),JsValue> {
+pub fn render_bezier(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRenderingContext2d>, core: &mech_core::Core) -> Result<(),JsValue> {
   let parameters_table_brrw = parameters_table.borrow();
   match (parameters_table_brrw.get(&TableIndex::Index(1), &TableIndex::Alias(*CONTROL__POINTS)),
         parameters_table_brrw.get(&TableIndex::Index(1), &TableIndex::Alias(*END__POINT))) {
     (Ok(Value::Reference(TableId::Global(control__point_table_id))),Ok(Value::Reference(TableId::Global(end__point_table_id)))) => {
-      let control__point_table = unsafe{(*wasm_core).core.get_table_by_id(control__point_table_id).unwrap()};
-      let end__point_table = unsafe{(*wasm_core).core.get_table_by_id(end__point_table_id).unwrap()};
+      let control__point_table = core.get_table_by_id(control__point_table_id).unwrap();
+      let end__point_table = core.get_table_by_id(end__point_table_id).unwrap();
       let control__point_table_brrw = control__point_table.borrow();
       let end__point_table_brrw = end__point_table.borrow();
       match (control__point_table_brrw.get(&TableIndex::Index(1), &TableIndex::Alias(*X)),
@@ -286,7 +286,7 @@ pub fn render_bezier(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRe
   Ok(())
 }
 
-pub fn render_arc_path(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRenderingContext2d>, wasm_core: *mut WasmCore) -> Result<(),JsValue> {
+pub fn render_arc_path(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRenderingContext2d>, core: &mech_core::Core) -> Result<(),JsValue> {
   let parameters_table_brrw = parameters_table.borrow();
   match (parameters_table_brrw.get(&TableIndex::Index(1), &TableIndex::Alias(*CENTER__X)),
          parameters_table_brrw.get(&TableIndex::Index(1), &TableIndex::Alias(*CENTER__Y)),
@@ -301,7 +301,7 @@ pub fn render_arc_path(parameters_table: Rc<RefCell<Table>>, context: &Rc<Canvas
   Ok(())
 }  
 
-pub fn render_path(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRenderingContext2d>, wasm_core: *mut WasmCore) -> Result<(),JsValue> {
+pub fn render_path(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRenderingContext2d>, core: &mech_core::Core) -> Result<(),JsValue> {
   let parameters_table_brrw = parameters_table.borrow();
   context.save();
   let rotate = match parameters_table_brrw.get(&TableIndex::Index(1), &TableIndex::Alias(*ROTATE)) {
@@ -377,7 +377,7 @@ pub fn render_path(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRend
   Ok(())
 }
 
-pub fn render_image(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRenderingContext2d>, wasm_core: *mut WasmCore) -> Result<(),JsValue> {
+pub fn render_image(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRenderingContext2d>, core: &mech_core::Core) -> Result<(),JsValue> {
   let parameters_table_brrw = parameters_table.borrow();
   for row in 1..=parameters_table_brrw.rows {
     match (parameters_table_brrw.get(&TableIndex::Index(row), &TableIndex::Alias(*SOURCE)),
@@ -398,7 +398,7 @@ pub fn render_image(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRen
               context.rotate(rotation.unwrap() as f64 * PI / 180.0);
             } // TODO Else warn user it's the wrong type
             if let Ok(Value::Reference(scale_table_id)) = scale {
-              let scale_table = unsafe{(*wasm_core).core.get_table_by_id(*scale_table_id.unwrap()).unwrap()};
+              let scale_table = core.get_table_by_id(*scale_table_id.unwrap()).unwrap();
               let scale_table_brrw = scale_table.borrow();
               match (scale_table_brrw.get(&TableIndex::Index(1), &TableIndex::Alias(*X)),
                      scale_table_brrw.get(&TableIndex::Index(1), &TableIndex::Alias(*Y))) {

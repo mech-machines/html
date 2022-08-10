@@ -135,3 +135,88 @@ lazy_static! {
   static ref SEARCH: u64 = hash_str("search");
   static ref SCALE: u64 = hash_str("scale");
 }
+
+pub fn render_value(&mut self, value: Value, document: &web_sys::Document, core: &mech_core::Core) -> Result<web_sys::Element, JsValue> {
+  let mut div = document.create_element("div")?;
+  match value {
+    Value::String(chars) => {
+      let contents_string = chars.to_string();
+      div.set_inner_html(&contents_string);
+    },
+    Value::F32(x) => div.set_inner_html(&format!("{:.2?}", x)),
+    Value::F64(x) => div.set_inner_html(&format!("{:?}", x)),
+    Value::U128(x) => div.set_inner_html(&format!("{:?}", x)),
+    Value::U64(x) => div.set_inner_html(&format!("{:?}", x)),
+    Value::U32(x) => div.set_inner_html(&format!("{:?}", x)),
+    Value::U16(x) => div.set_inner_html(&format!("{:?}", x)),
+    Value::U8(x) => div.set_inner_html(&format!("{:?}", x)),
+    Value::I128(x) => div.set_inner_html(&format!("{:?}", x)),
+    Value::I64(x) => div.set_inner_html(&format!("{:?}", x)),
+    Value::I32(x) => div.set_inner_html(&format!("{:?}", x)),
+    Value::I16(x) => div.set_inner_html(&format!("{:?}", x)),
+    Value::I8(x) => div.set_inner_html(&format!("{:?}", x)),
+    Value::Reference(TableId::Global(table_id)) => {
+      let table = core.get_table_by_id(table_id).unwrap();
+      let rendered_ref = make_element(&table.borrow(), document, core)?;
+      div.append_child(&rendered_ref)?;
+    }
+    x => log!("4745 {:?}",x),
+  }
+  Ok(div)
+}
+
+pub fn make_element(&mut self, table: &Table, document: &web_sys::Document, core: &mech_core::Core) -> Result<web_sys::Element, JsValue> {
+  let mut container: web_sys::Element = document.create_element("div")?;
+  let element_id = hash_str(&format!("div-{:?}", table.id));
+  container.set_id(&format!("{:?}",element_id));
+  container.set_attribute("table-id", &format!("{}", table.id))?;
+  // First check to see if the table has a "type" column. If it doesn't, just render the table
+  match table.col_map.get_index(&*KIND) {
+    Ok(_) => {
+      for row in 1..=table.rows {
+        match table.get(&TableIndex::Index(row), &TableIndex::Alias(*KIND))  {
+          Ok(Value::String(kind)) => {
+            let raw_kind = kind.hash();
+            // Render an HTML element
+            if raw_kind == *DIV { render_div(table,&mut container, document, core)?; }
+            else if raw_kind == *A { render_link(table,&mut container, document, core)?; }
+            else if raw_kind == *IMG { render_img(table,&mut container,document, core)?; }
+            else if raw_kind == *BUTTON { render_button(table, &mut container, document, core)?; }
+            else if raw_kind == *SLIDER { render_slider(table, &mut container, document, core)?; }
+            else if raw_kind == *CANVAS { render_canvas(table, &mut container, document, core)?; }
+            else {
+              log!("4744 {:?}", raw_kind);
+            }
+          }
+          x => log!("4745 {:?}",x),
+          Err(x) => log!("4746 {:?}",x),
+        }
+      }
+    }
+    // There's no Type column, so we are going to treat the table as a generic thing and just turn it into divs
+    Err(_) => {
+      // Make a div for each row
+      for row in 1..=table.rows {
+        let mut row_div = document.create_element("div")?;
+        let element_id = hash_str(&format!("div-{:?}-{:?}", table.id, row));
+        row_div.set_id(&format!("{:?}",element_id));
+        // Make an internal div for each cell 
+        for column in 1..=table.cols {
+          // Get contents
+          match table.get(&TableIndex::Index(row), &TableIndex::Index(column)) {
+            Ok(contents) => {
+              let mut cell_div = document.create_element("div")?;
+              let element_id = hash_str(&format!("div-{:?}-{:?}-{:?}", table.id, row, column));
+              let rendered = render_value(contents, document, core)?;
+              rendered.set_id(&format!("{:?}",element_id));
+              row_div.append_child(&rendered)?;
+            }
+            x => log!("4747 {:?}",x),
+          }          
+        }
+        container.append_child(&row_div)?;
+      }
+    }
+  }
+  Ok(container)
+}
