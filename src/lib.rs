@@ -38,13 +38,13 @@ use mech_utilities::{SocketMessage, MiniBlock};
 use web_sys::{ErrorEvent, MessageEvent, WebSocket, FileReader};
 use std::sync::Arc;
 
-mod shapes;
-mod elements;
+pub mod shapes;
+pub mod elements;
 
 pub use self::shapes::*;
 pub use self::elements::*;
 
-static PI: f64 = 3.141592654;
+static PI: f64 = 3.14159265358979323846264338327950288;
 
 #[macro_export]
 macro_rules! log {
@@ -54,98 +54,98 @@ macro_rules! log {
 }
 
 lazy_static! {
-  static ref HTML_APP: u64 = hash_str("html/app");
-  static ref DIV: u64 = hash_str("div");
-  static ref A: u64 = hash_str("a");
-  static ref IMG: u64 = hash_str("img");
-  static ref SRC: u64 = hash_str("src");
-  static ref CONTAINS: u64 = hash_str("contains");
-  static ref ROOT: u64 = hash_str("root");
-  static ref TYPE: u64 = hash_str("type");
-  static ref KIND: u64 = hash_str("kind");
-  static ref HREF: u64 = hash_str("href");
-  static ref BUTTON: u64 = hash_str("button");
-  static ref SLIDER: u64 = hash_str("slider");
-  static ref MIN: u64 = hash_str("min");
-  static ref MAX: u64 = hash_str("max");
-  static ref VALUE: u64 = hash_str("value");
-  static ref CANVAS: u64 = hash_str("canvas");
-  static ref PARAMETERS: u64 = hash_str("parameters");
-  static ref HEIGHT: u64 = hash_str("height");
-  static ref WIDTH: u64 = hash_str("width");
-  static ref SHAPE: u64 = hash_str("shape");
-  static ref CIRCLE: u64 = hash_str("circle");
-  static ref RECTANGLE: u64 = hash_str("rectangle");
-  static ref LINE: u64 = hash_str("line");
-  static ref PATH: u64 = hash_str("path");
-  static ref START__POINT: u64 = hash_str("start-point");
-  static ref LINE__WIDTH: u64 = hash_str("line-width");
-  static ref START__ANGLE: u64 = hash_str("start-angle");
-  static ref END__ANGLE: u64 = hash_str("end-angle");
-  static ref QUADRATIC: u64 = hash_str("quadratic");
-  static ref CONTROL__POINT: u64 = hash_str("control-point");
-  static ref CONTROL__POINTS: u64 = hash_str("control-points");
-  static ref END__POINT: u64 = hash_str("end-point");
-  static ref X1: u64 = hash_str("x1");
-  static ref X2: u64 = hash_str("x2");
-  static ref Y1: u64 = hash_str("y1");
-  static ref Y2: u64 = hash_str("y2");
-  static ref RADIUS: u64 = hash_str("radius");
-  static ref STROKE: u64 = hash_str("stroke");
-  static ref FILL: u64 = hash_str("fill");
-  static ref CENTER__X: u64 = hash_str("center-x");
-  static ref CENTER__Y: u64 = hash_str("center-y");
-  static ref IMAGE: u64 = hash_str("image");
-  static ref X: u64 = hash_str("x");
-  static ref Y: u64 = hash_str("y");
-  static ref ROTATE: u64 = hash_str("rotate");
-  static ref TRANSLATE: u64 = hash_str("translate");
-  static ref SOURCE: u64 = hash_str("source");
-  static ref TIME_TIMER: u64 = hash_str("time/timer");
-  static ref PERIOD: u64 = hash_str("period");
-  static ref TICKS: u64 = hash_str("ticks");
-  static ref HTML_EVENT_POINTER__MOVE: u64 = hash_str("html/event/pointer-move");
-  static ref HTML_EVENT_POINTER__DOWN: u64 = hash_str("html/event/pointer-down");
-  static ref HTML_EVENT_POINTER__UP: u64 = hash_str("html/event/pointer-up");
-  static ref HTML_EVENT_KEY__DOWN: u64 = hash_str("html/event/key-down");
-  static ref HTML_EVENT_KEY__UP: u64 = hash_str("html/event/key-up");
-  static ref TARGET: u64 = hash_str("target");
-  static ref KEY: u64 = hash_str("key");
-  static ref EVENT__ID: u64 = hash_str("event-id");
-  static ref ARC: u64 = hash_str("arc");
-  static ref ELLIPSE: u64 = hash_str("ellipse");
-  static ref MAJOR__AXIS: u64 = hash_str("major-axis");
-  static ref MINOR__AXIS: u64 = hash_str("minor-axis");
-  static ref STARTING__ANGLE: u64 = hash_str("starting-angle");
-  static ref ENDING__ANGLE: u64 = hash_str("ending-angle");
-  static ref TEXT: u64 = hash_str("text");
-  static ref FONT: u64 = hash_str("font");
-  static ref SIZE: u64 = hash_str("size");
-  static ref FACE: u64 = hash_str("face");
-  static ref STYLE: u64 = hash_str("style");
-  static ref WEIGHT: u64 = hash_str("weight");
-  static ref BOLD: u64 = hash_str("bold");
-  static ref NORMAL: u64 = hash_str("normal");
-  static ref ITALIC: u64 = hash_str("italic");
-  static ref FAMILY: u64 = hash_str("family");
-  static ref DIRECTION: u64 = hash_str("direction");
-  static ref ALIGNMENT: u64 = hash_str("alignment");
-  static ref START: u64 = hash_str("start");
-  static ref END: u64 = hash_str("end");
-  static ref LEFT: u64 = hash_str("left");
-  static ref RIGHT: u64 = hash_str("right");
-  static ref CENTER: u64 = hash_str("center");
-  static ref BEZIER: u64 = hash_str("bezier");
-  static ref HTML_LOCATION: u64 = hash_str("html/location");
-  static ref HASH: u64 = hash_str("hash");
-  static ref HOST: u64 = hash_str("host");
-  static ref HOST__NAME: u64 = hash_str("host-name");
-  static ref ORIGIN: u64 = hash_str("origin");
-  static ref PATH__NAME: u64 = hash_str("path-name");
-  static ref PORT: u64 = hash_str("port");
-  static ref PROTOCOL: u64 = hash_str("protocol");
-  static ref SEARCH: u64 = hash_str("search");
-  static ref SCALE: u64 = hash_str("scale");
+  pub static ref HTML_APP: u64 = hash_str("html/app");
+  pub static ref DIV: u64 = hash_str("div");
+  pub static ref A: u64 = hash_str("a");
+  pub static ref IMG: u64 = hash_str("img");
+  pub static ref SRC: u64 = hash_str("src");
+  pub static ref CONTAINS: u64 = hash_str("contains");
+  pub static ref ROOT: u64 = hash_str("root");
+  pub static ref TYPE: u64 = hash_str("type");
+  pub static ref KIND: u64 = hash_str("kind");
+  pub static ref HREF: u64 = hash_str("href");
+  pub static ref BUTTON: u64 = hash_str("button");
+  pub static ref SLIDER: u64 = hash_str("slider");
+  pub static ref MIN: u64 = hash_str("min");
+  pub static ref MAX: u64 = hash_str("max");
+  pub static ref VALUE: u64 = hash_str("value");
+  pub static ref CANVAS: u64 = hash_str("canvas");
+  pub static ref PARAMETERS: u64 = hash_str("parameters");
+  pub static ref HEIGHT: u64 = hash_str("height");
+  pub static ref WIDTH: u64 = hash_str("width");
+  pub static ref SHAPE: u64 = hash_str("shape");
+  pub static ref CIRCLE: u64 = hash_str("circle");
+  pub static ref RECTANGLE: u64 = hash_str("rectangle");
+  pub static ref LINE: u64 = hash_str("line");
+  pub static ref PATH: u64 = hash_str("path");
+  pub static ref START__POINT: u64 = hash_str("start-point");
+  pub static ref LINE__WIDTH: u64 = hash_str("line-width");
+  pub static ref START__ANGLE: u64 = hash_str("start-angle");
+  pub static ref END__ANGLE: u64 = hash_str("end-angle");
+  pub static ref QUADRATIC: u64 = hash_str("quadratic");
+  pub static ref CONTROL__POINT: u64 = hash_str("control-point");
+  pub static ref CONTROL__POINTS: u64 = hash_str("control-points");
+  pub static ref END__POINT: u64 = hash_str("end-point");
+  pub static ref X1: u64 = hash_str("x1");
+  pub static ref X2: u64 = hash_str("x2");
+  pub static ref Y1: u64 = hash_str("y1");
+  pub static ref Y2: u64 = hash_str("y2");
+  pub static ref RADIUS: u64 = hash_str("radius");
+  pub static ref STROKE: u64 = hash_str("stroke");
+  pub static ref FILL: u64 = hash_str("fill");
+  pub static ref CENTER__X: u64 = hash_str("center-x");
+  pub static ref CENTER__Y: u64 = hash_str("center-y");
+  pub static ref IMAGE: u64 = hash_str("image");
+  pub static ref X: u64 = hash_str("x");
+  pub static ref Y: u64 = hash_str("y");
+  pub static ref ROTATE: u64 = hash_str("rotate");
+  pub static ref TRANSLATE: u64 = hash_str("translate");
+  pub static ref SOURCE: u64 = hash_str("source");
+  pub static ref TIME_TIMER: u64 = hash_str("time/timer");
+  pub static ref PERIOD: u64 = hash_str("period");
+  pub static ref TICKS: u64 = hash_str("ticks");
+  pub static ref HTML_EVENT_POINTER__MOVE: u64 = hash_str("html/event/pointer-move");
+  pub static ref HTML_EVENT_POINTER__DOWN: u64 = hash_str("html/event/pointer-down");
+  pub static ref HTML_EVENT_POINTER__UP: u64 = hash_str("html/event/pointer-up");
+  pub static ref HTML_EVENT_KEY__DOWN: u64 = hash_str("html/event/key-down");
+  pub static ref HTML_EVENT_KEY__UP: u64 = hash_str("html/event/key-up");
+  pub static ref TARGET: u64 = hash_str("target");
+  pub static ref KEY: u64 = hash_str("key");
+  pub static ref EVENT__ID: u64 = hash_str("event-id");
+  pub static ref ARC: u64 = hash_str("arc");
+  pub static ref ELLIPSE: u64 = hash_str("ellipse");
+  pub static ref MAJOR__AXIS: u64 = hash_str("major-axis");
+  pub static ref MINOR__AXIS: u64 = hash_str("minor-axis");
+  pub static ref STARTING__ANGLE: u64 = hash_str("starting-angle");
+  pub static ref ENDING__ANGLE: u64 = hash_str("ending-angle");
+  pub static ref TEXT: u64 = hash_str("text");
+  pub static ref FONT: u64 = hash_str("font");
+  pub static ref SIZE: u64 = hash_str("size");
+  pub static ref FACE: u64 = hash_str("face");
+  pub static ref STYLE: u64 = hash_str("style");
+  pub static ref WEIGHT: u64 = hash_str("weight");
+  pub static ref BOLD: u64 = hash_str("bold");
+  pub static ref NORMAL: u64 = hash_str("normal");
+  pub static ref ITALIC: u64 = hash_str("italic");
+  pub static ref FAMILY: u64 = hash_str("family");
+  pub static ref DIRECTION: u64 = hash_str("direction");
+  pub static ref ALIGNMENT: u64 = hash_str("alignment");
+  pub static ref START: u64 = hash_str("start");
+  pub static ref END: u64 = hash_str("end");
+  pub static ref LEFT: u64 = hash_str("left");
+  pub static ref RIGHT: u64 = hash_str("right");
+  pub static ref CENTER: u64 = hash_str("center");
+  pub static ref BEZIER: u64 = hash_str("bezier");
+  pub static ref HTML_LOCATION: u64 = hash_str("html/location");
+  pub static ref HASH: u64 = hash_str("hash");
+  pub static ref HOST: u64 = hash_str("host");
+  pub static ref HOST__NAME: u64 = hash_str("host-name");
+  pub static ref ORIGIN: u64 = hash_str("origin");
+  pub static ref PATH__NAME: u64 = hash_str("path-name");
+  pub static ref PORT: u64 = hash_str("port");
+  pub static ref PROTOCOL: u64 = hash_str("protocol");
+  pub static ref SEARCH: u64 = hash_str("search");
+  pub static ref SCALE: u64 = hash_str("scale");
 }
 
 pub fn render_value(value: Value, document: &web_sys::Document, core: &mech_core::Core) -> Result<web_sys::Element, JsValue> {
@@ -175,6 +175,46 @@ pub fn render_value(value: Value, document: &web_sys::Document, core: &mech_core
     x => log!("4745 {:?}",x),
   }
   Ok(div)
+}
+
+pub fn draw_canvas(canvas: &web_sys::HtmlCanvasElement, core: &mech_core::Core) -> Result<(), JsValue> {
+  
+  let context = canvas
+      .get_context("2d")
+      .unwrap()
+      .unwrap()
+      .dyn_into::<web_sys::CanvasRenderingContext2d>()
+      .unwrap();
+
+  // Get the elements table for this canvas
+  let elements_table_id_string = canvas.get_attribute("elements").unwrap();
+  let elements_table_id: u64 = elements_table_id_string.parse::<u64>().unwrap();
+  let elements_table = core.get_table_by_id(elements_table_id).unwrap();
+  let elements_table_brrw = elements_table.borrow();
+  let context = Rc::new(context);
+  context.clear_rect(0.0, 0.0, canvas.width().into(), canvas.height().into());
+  for row in 1..=elements_table_brrw.rows as usize {
+    match (elements_table_brrw.get(&TableIndex::Index(row), &TableIndex::Alias(*SHAPE)),
+    elements_table_brrw.get(&TableIndex::Index(row), &TableIndex::Alias(*PARAMETERS))) {
+      (Ok(Value::String(shape)), Ok(Value::Reference(parameters_table_id))) => {
+        let shape = shape.hash();
+        let parameters_table = core.get_table_by_id(*parameters_table_id.unwrap()).unwrap();
+        // Render a shape
+        if shape == *CIRCLE { render_circle(parameters_table,&context)?; }
+        else if shape == *ELLIPSE { render_ellipse(parameters_table,&context)?; }
+        else if shape == *ARC { render_arc(parameters_table,&context)?; }
+        else if shape == *RECTANGLE { render_rectangle(parameters_table,&context)?; } 
+        else if shape == *TEXT { render_text(parameters_table,&context,core)?; }
+        else if shape == *PATH { render_path(parameters_table,&context,core)?; }
+        else if shape == *IMAGE { render_image(parameters_table,&context,core)?; }
+        else {
+          log!("5869");
+        }
+      },
+      x => {log!("5870 {:?}", x);},
+    }
+  }
+  Ok(())
 }
 
 pub fn make_element(table: &Table, document: &web_sys::Document, core: &mech_core::Core) -> Result<web_sys::Element, JsValue> {
