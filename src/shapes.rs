@@ -310,7 +310,7 @@ pub fn render_path(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRend
   };
   let (tx,ty) = match parameters_table_brrw.get(&TableIndex::Index(1), &TableIndex::Alias(*TRANSLATE)) {
     Ok(Value::Reference(TableId::Global(translate_table_id))) => {
-      let translate_table = unsafe{(*wasm_core).core.get_table_by_id(translate_table_id).unwrap()};
+      let translate_table = core.get_table_by_id(translate_table_id).unwrap();
       let translate_table_brrw = translate_table.borrow();
       match (translate_table_brrw.get(&TableIndex::Index(1), &TableIndex::Alias(*X)),
               translate_table_brrw.get(&TableIndex::Index(1), &TableIndex::Alias(*Y))) {
@@ -327,26 +327,26 @@ pub fn render_path(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRend
   match (parameters_table_brrw.get(&TableIndex::Index(1), &TableIndex::Alias(*START__POINT)),
           parameters_table_brrw.get(&TableIndex::Index(1), &TableIndex::Alias(*CONTAINS))) {
     (Ok(Value::Reference(start_point_id)), Ok(Value::Reference(TableId::Global(contains_table_id)))) => {
-      let start_point_table = unsafe{(*wasm_core).core.get_table_by_id(*start_point_id.unwrap()).unwrap()};
+      let start_point_table = core.get_table_by_id(*start_point_id.unwrap()).unwrap();
       let start_point_table_brrw = start_point_table.borrow();
       match (start_point_table_brrw.get(&TableIndex::Index(1), &TableIndex::Alias(*X)),
               start_point_table_brrw.get(&TableIndex::Index(1), &TableIndex::Alias(*Y))) {
           (Ok(Value::F32(x)),Ok(Value::F32(y))) => {
             context.move_to(x.into(), y.into());
           // Get the contained shapes
-          let contains_table = unsafe{(*wasm_core).core.get_table_by_id(contains_table_id).unwrap()};
+          let contains_table = core.get_table_by_id(contains_table_id).unwrap();
           let contains_table_brrw = contains_table.borrow();
           for i in 1..=contains_table_brrw.rows {
             match (contains_table_brrw.get(&TableIndex::Index(i), &TableIndex::Alias(*SHAPE)),
                     contains_table_brrw.get(&TableIndex::Index(i), &TableIndex::Alias(*PARAMETERS))) {
               (Ok(Value::String(shape)),Ok(Value::Reference(TableId::Global(parameters_table_id)))) => {
                 let shape = shape.hash();
-                let parameters_table = unsafe{(*wasm_core).core.get_table_by_id(parameters_table_id).unwrap()};
+                let parameters_table = core.get_table_by_id(parameters_table_id).unwrap();
                 // Render a path element
                 if shape == *LINE { render_line(parameters_table,&context)?; }
-                else if shape == *QUADRATIC { render_quadratic(parameters_table,&context,wasm_core)?; }
-                else if shape == *BEZIER { render_bezier(parameters_table,&context,wasm_core)?; }
-                else if shape == *ARC { render_arc_path(parameters_table,&context,wasm_core)?; }
+                else if shape == *QUADRATIC { render_quadratic(parameters_table,&context,core)?; }
+                else if shape == *BEZIER { render_bezier(parameters_table,&context,core)?; }
+                else if shape == *ARC { render_arc_path(parameters_table,&context,core)?; }
               }
               x => {log!("5865 {:?}", x);},
             }
@@ -387,7 +387,7 @@ pub fn render_image(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRen
           parameters_table_brrw.get(&TableIndex::Index(row), &TableIndex::Alias(*SCALE))) {
       (Ok(Value::String(source)), Ok(Value::F32(x)), Ok(Value::F32(y)), rotation, scale) => {
         let source_hash = source.hash();
-        match unsafe{(*wasm_core).images.entry(source_hash)} {
+        /*match unsafe{(*wasm_core).images.entry(source_hash)} {
           Entry::Occupied(img_entry) => {
             let img = img_entry.get();
             let ix = img.width() as f64 / 2.0;
@@ -426,7 +426,7 @@ pub fn render_image(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRen
               closure.forget();
             }
           }
-        }
+        }*/
       }
       x => {log!("5868 {:?}", x);},
     }

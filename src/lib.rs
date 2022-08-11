@@ -41,6 +41,18 @@ use std::sync::Arc;
 mod shapes;
 mod elements;
 
+pub use self::shapes::*;
+pub use self::elements::*;
+
+static PI: f64 = 3.141592654;
+
+#[macro_export]
+macro_rules! log {
+  ( $( $t:tt )* ) => {
+    web_sys::console::log_1(&format!( $( $t )* ).into());
+  }
+}
+
 lazy_static! {
   static ref HTML_APP: u64 = hash_str("html/app");
   static ref DIV: u64 = hash_str("div");
@@ -136,7 +148,7 @@ lazy_static! {
   static ref SCALE: u64 = hash_str("scale");
 }
 
-pub fn render_value(&mut self, value: Value, document: &web_sys::Document, core: &mech_core::Core) -> Result<web_sys::Element, JsValue> {
+pub fn render_value(value: Value, document: &web_sys::Document, core: &mech_core::Core) -> Result<web_sys::Element, JsValue> {
   let mut div = document.create_element("div")?;
   match value {
     Value::String(chars) => {
@@ -165,7 +177,7 @@ pub fn render_value(&mut self, value: Value, document: &web_sys::Document, core:
   Ok(div)
 }
 
-pub fn make_element(&mut self, table: &Table, document: &web_sys::Document, core: &mech_core::Core) -> Result<web_sys::Element, JsValue> {
+pub fn make_element(table: &Table, document: &web_sys::Document, core: &mech_core::Core) -> Result<web_sys::Element, JsValue> {
   let mut container: web_sys::Element = document.create_element("div")?;
   let element_id = hash_str(&format!("div-{:?}", table.id));
   container.set_id(&format!("{:?}",element_id));
