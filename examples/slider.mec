@@ -2,13 +2,13 @@ Default
   #x = 80
 
 Label
-  #message = [type: "div" contains: #x]
+  #message = [kind: "div" contains: #x]
 
 Button Example
   #html/app = [
     root: "mech-root" 
     contains: [
-      [type: "div" contains: [
+      [kind: "div" contains: [
         [#message]
         [type: "slider" 
           min: 0.0

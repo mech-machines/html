@@ -152,5 +152,5 @@ Draw a shape to the canvas
   ]
   #html/app = [
     root: "mech-root" 
-    contains: [|type contains parameters| canvas]
+    contains: [|kind contains parameters| canvas]
   ]
