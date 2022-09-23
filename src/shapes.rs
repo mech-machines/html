@@ -25,6 +25,13 @@ fn get_line_width(parameters_table: &Table, row: usize) -> f64 {
   }
 }
 
+fn get_rotation(parameters_table: &Table, row: usize) -> f64 {
+  match parameters_table.get(&TableIndex::Index(row), &TableIndex::Alias(*ROTATE))  {
+    Ok(Value::F32(line_width)) => f64::from(line_width),
+    _ => 0.0,
+  }
+}
+
 fn get_property(parameters_table: &Table, row: usize, alias: u64) -> String {
   match parameters_table.get(&TableIndex::Index(row), &TableIndex::Alias(alias))  {
     Ok(Value::F32(property)) => format!("{:?}", property),
@@ -83,8 +90,10 @@ pub fn render_ellipse(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasR
       (Ok(Value::F32(cx)), Ok(Value::F32(cy)), Ok(Value::F32(maja)), Ok(Value::F32(mina))) => {
         let stroke = get_stroke_string(&parameters_table_brrw,row, *STROKE);
         let fill = get_stroke_string(&parameters_table_brrw,row, *FILL);
+        let rotation = get_rotation(&parameters_table_brrw,row, *ROTATION);
         let line_width = get_line_width(&parameters_table_brrw,row);
         context.save();
+        context.rotate(rotation);
         context.begin_path();
         context.ellipse(cx.into(), cy.into(), maja.into(), mina.into(), 0.0, 0.0, 2.0 * PI);
         context.set_fill_style(&JsValue::from_str(&fill));
