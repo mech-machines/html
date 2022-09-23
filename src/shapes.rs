@@ -93,14 +93,14 @@ pub fn render_ellipse(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasR
         let rotation = get_rotation(&parameters_table_brrw,row);
         let line_width = get_line_width(&parameters_table_brrw,row);
         context.save();
-        context.translate(cx.into(),cy.into());
-        context.rotate(rotation);
         context.begin_path();
         context.ellipse(cx.into(), cy.into(), maja.into(), mina.into(), 0.0, 0.0, 2.0 * PI);
         context.set_fill_style(&JsValue::from_str(&fill));
         context.fill();
         context.set_stroke_style(&JsValue::from_str(&stroke));
-        context.set_line_width(line_width.into());    
+        context.set_line_width(line_width.into());  
+        context.translate(cx.into(),cy.into());
+        context.rotate(rotation);  
         context.stroke();                
         context.restore();
       }
