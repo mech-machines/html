@@ -90,7 +90,7 @@ pub fn render_ellipse(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasR
       (Ok(Value::F32(cx)), Ok(Value::F32(cy)), Ok(Value::F32(maja)), Ok(Value::F32(mina))) => {
         let stroke = get_stroke_string(&parameters_table_brrw,row, *STROKE);
         let fill = get_stroke_string(&parameters_table_brrw,row, *FILL);
-        let rotation = get_rotation(&parameters_table_brrw,row, *ROTATION);
+        let rotation = get_rotation(&parameters_table_brrw,row);
         let line_width = get_line_width(&parameters_table_brrw,row);
         context.save();
         context.rotate(rotation);
