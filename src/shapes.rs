@@ -34,9 +34,11 @@ fn get_rotation(parameters_table: &Table, row: usize) -> f64 {
 
 fn get_property(parameters_table: &Table, row: usize, alias: u64) -> String {
   match parameters_table.get(&TableIndex::Index(row), &TableIndex::Alias(alias))  {
-    Ok(Value::F32(property)) => format!("{:?}", property),
+    Ok(Value::F32(property)) => {
+      format!("{:?}", property)
+    },
     Ok(Value::String(property)) => property.to_string(),
-    _ => "".to_string()
+    x => "error".to_string()
   }
 }
 
@@ -94,13 +96,11 @@ pub fn render_ellipse(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasR
         let line_width = get_line_width(&parameters_table_brrw,row);
         context.save();
         context.begin_path();
-        context.ellipse(cx.into(), cy.into(), maja.into(), mina.into(), 0.0, 0.0, 2.0 * PI);
+        context.ellipse(cx.into(), cy.into(), maja.into(), mina.into(), rotation, 0.0, 2.0 * PI);
         context.set_fill_style(&JsValue::from_str(&fill));
         context.fill();
         context.set_stroke_style(&JsValue::from_str(&stroke));
         context.set_line_width(line_width.into());  
-        context.translate(cx.into(),cy.into());
-        context.rotate(rotation);  
         context.stroke();                
         context.restore();
       }
@@ -166,39 +166,29 @@ pub fn render_rectangle(parameters_table: Rc<RefCell<Table>>, context: &Rc<Canva
 pub fn render_text(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRenderingContext2d>, core: &mech_core::Core) -> Result<(),JsValue> {
   let parameters_table_brrw = parameters_table.borrow();
   for row in 1..=parameters_table_brrw.rows {
-    match (parameters_table_brrw.get(&TableIndex::Index(row), &TableIndex::Alias(*TEXT)),
+    let values = match (parameters_table_brrw.get(&TableIndex::Index(row), &TableIndex::Alias(*TEXT)),
           parameters_table_brrw.get(&TableIndex::Index(row), &TableIndex::Alias(*X)),
           parameters_table_brrw.get(&TableIndex::Index(row), &TableIndex::Alias(*Y))) {
-      (Ok(Value::String(text_value)), Ok(Value::F32(x)), Ok(Value::F32(y))) => {
-        let stroke = get_stroke_string(&parameters_table_brrw,row, *STROKE);
-        let fill = get_stroke_string(&parameters_table_brrw,row, *FILL);
-        let line_width = get_line_width(&parameters_table_brrw,row);
-        let text = get_property(&parameters_table_brrw, row, *TEXT);
-
-        context.save();
-        context.set_fill_style(&JsValue::from_str(&fill));
-        context.set_line_width(line_width);
-        match parameters_table_brrw.get(&TableIndex::Index(row), &TableIndex::Alias(*FONT)) {
-          Ok(Value::Reference(font_table_id)) => {
-            let font_table = core.get_table_by_id(*font_table_id.unwrap()).unwrap();
-            let font_table_brrw = font_table.borrow();
-            let size = get_property(&font_table_brrw, row, *SIZE);
-            let face = match &*get_property(&font_table_brrw, row, *FACE) {
-              "" => "sans-serif".to_string(),
-              x => x.to_string(),
-            };
-            let font_string = format!("{}px {}", size, face);
-            context.set_font(&*font_string);
-          }
-          _ => (),
-        }
-        context.fill_text(&text,x.into(),y.into());
-        context.restore();
-      }
-      (Ok(Value::U64(number)), Ok(Value::F32(x)), Ok(Value::F32(y))) => {
-
-        let text = format!("{:?}",number);
-
+      (Ok(Value::String(text_value)), Ok(Value::F32(x)), Ok(Value::F32(y))) => Ok((text_value.to_string(),x,y)),
+      (Ok(Value::U8(number)), Ok(Value::F32(x)), Ok(Value::F32(y))) => Ok((format!("{:?}",number),x,y)),
+      (Ok(Value::U16(number)), Ok(Value::F32(x)), Ok(Value::F32(y))) => Ok((format!("{:?}",number),x,y)),
+      (Ok(Value::U32(number)), Ok(Value::F32(x)), Ok(Value::F32(y))) => Ok((format!("{:?}",number),x,y)),
+      (Ok(Value::U64(number)), Ok(Value::F32(x)), Ok(Value::F32(y))) => Ok((format!("{:?}",number),x,y)),
+      (Ok(Value::U128(number)), Ok(Value::F32(x)), Ok(Value::F32(y))) => Ok((format!("{:?}",number),x,y)),
+      (Ok(Value::I8(number)), Ok(Value::F32(x)), Ok(Value::F32(y))) => Ok((format!("{:?}",number),x,y)),
+      (Ok(Value::I16(number)), Ok(Value::F32(x)), Ok(Value::F32(y))) => Ok((format!("{:?}",number),x,y)),
+      (Ok(Value::I32(number)), Ok(Value::F32(x)), Ok(Value::F32(y))) => Ok((format!("{:?}",number),x,y)),
+      (Ok(Value::I64(number)), Ok(Value::F32(x)), Ok(Value::F32(y))) => Ok((format!("{:?}",number),x,y)),
+      (Ok(Value::I128(number)), Ok(Value::F32(x)), Ok(Value::F32(y))) => Ok((format!("{:?}",number),x,y)),
+      (Ok(Value::F32(number)), Ok(Value::F32(x)), Ok(Value::F32(y))) => Ok((format!("{:?}",number),x,y)),
+      (Ok(Value::F64(number)), Ok(Value::F32(x)), Ok(Value::F32(y))) => Ok((format!("{:?}",number),x,y)),
+      x => {
+        log!("5858 {:?}", x);
+        Err(())
+      },
+    };
+    match values {
+      Ok((text,x,y)) => {
         let stroke = get_stroke_string(&parameters_table_brrw,row, *STROKE);
         let fill = get_stroke_string(&parameters_table_brrw,row, *FILL);
         let line_width = get_line_width(&parameters_table_brrw,row);
@@ -223,7 +213,7 @@ pub fn render_text(parameters_table: Rc<RefCell<Table>>, context: &Rc<CanvasRend
         context.fill_text(&text,x.into(),y.into());
         context.restore();
       }
-      x => {log!("5858 {:?}", x);},
+      _ => (),
     }
   }
   Ok(())
