@@ -3,7 +3,7 @@ Link Example
     root: "mech-root" 
     contains: [
       kind: "a" 
-      href: "http://mech-lang.org" 
+      href: "https://mech-lang.org" 
       contains: "Link!"
     ]
   ]
